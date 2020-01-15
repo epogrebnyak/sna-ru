@@ -80,7 +80,8 @@ renamer = {
 
 items = [
     (
-    "Cальдо заработной платы, полученной за границей и выплаченной в России нерезидентам",
+    "Cальдо заработной платы, полученной за границей и выплаченной в России "
+    "нерезидентам",
     "",
     "W_row_net",
     "-381133,2	-307314,6	-120218,9	-132844,6	-191316,2"
@@ -211,32 +212,29 @@ def get_df(doc):
         .applymap(float)
     )
 
-
-df = get_df(doc1)[["Xb", "IM", "Tp", "Sp", "AX", "C", "I", "EX", "desc"]]
-df["X"] = df.Xb + df.Tp - df.Sp
-res = df.X + df.IM
-use = df.AX + df.C + df.I + df.EX
-
-
 def eq(a, b):
     return ((a - b).abs() < 0.5).all()
 
+df = get_df(doc1)[["Xb", "IM", "Tp", "Sp", "AX", "C", "I", "EX", "desc"]]
+df2 = get_df(doc2)[['GDP', 'Tf', 'Sf', 'W', 'GP']]
+df3 = get_df(doc3)
+df_last = pd.concat(map(get_ts, items), axis=1)
 
+
+
+df["X"] = df.Xb + df.Tp - df.Sp
+res = df.X + df.IM
+use = df.AX + df.C + df.I + df.EX
 assert eq(res, use + df.desc)
 
 gdp1 = df.X - df.AX
 gdp2 = (df.C + df.I - df.IM) + df.EX + df.desc
 assert eq(gdp1, gdp2)
-
-df2 = get_df(doc2)["GDP Tf Sf W GP".split()]
 assert eq(gdp2, df2.GDP)
 
 gdp3 = df2.W + df2.Tf - df2.Sf + df2.GP
 assert eq(gdp3, df2.GDP)
 
-
-df3 = get_df(doc3)
-df_last = pd.concat(map(get_ts, items), axis=1)
 
 gni = df2.GDP + df3.Rr - df3.Rp + df_last.W_row_net
 assert eq(gni.iloc[1:,], df3.GNI.iloc[1:,])
@@ -252,3 +250,5 @@ NL = S + df_last.d9_recieved - df_last.d9_paid - df_last.GFCF - df_last.inv - df
 assert eq(NL, df_last.NL0)
 
 pd.concat([df, df2, df3, df_last], axis=1).to_csv("sna.csv")
+
+ts = pd.read_csv("sna.csv", index_col=0).loc[2018,:]#.divide(10^6).round(1)
