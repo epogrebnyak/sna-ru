@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 
+
 fig = go.Figure(
     go.Waterfall(
         name="2018",
@@ -14,13 +15,15 @@ fig = go.Figure(
             "relative",
         ],
         y=[
-            "Выпуск",
-            "Импорт",
-            "Статистическое расхождение",
-            "Экспорт",
-            "Инвестиции",
-            "Конечное потребление",
-            "Промежуточное потребление",
+            x[1] for x in [ 
+            ["Выпуск", "Output (X)"],
+            ["Импорт", "Import (IM)"],
+            ["Статистическое расхождение", "Statistical\ndiscrepancy"],
+            ["Экспорт", "Export (EX)"],
+            ["Инвестиции", "Investment (I)"],
+            ["Конечное потребление", "Final consumption (C)"],
+            ["Промежуточное потребление", "Intermediate\nconsumption (AX)"]
+            ]
         ],
         x=[196.6, 21.6, -0.6, -31.9, -23.6, -69.3, -92.7],
         connector={
@@ -30,8 +33,8 @@ fig = go.Figure(
     )
 )
 
-
-fig.update_layout(title="Национальные счета, РФ, 2018, млрд.руб.")
+"Национальные счета, РФ, 2018, млрд.руб."
+fig.update_layout(title="National accoutns, Russia, 2018, trn rub")
 
 fig.write_html("sna-ru.html", auto_open=True)
 
