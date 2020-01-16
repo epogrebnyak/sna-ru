@@ -1,3 +1,12 @@
+"""
+Run this file as 
+
+  python make_data.py
+  
+to produce dataset file <sna.csv>
+"""
+
+
 import io
 import pandas as pd
 
