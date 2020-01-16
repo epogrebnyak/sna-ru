@@ -1,24 +1,48 @@
 """
 # System of national accounts (SNA)
 
-Below is an end-to-end example of national accounts, processed
-as pandas dataframe in python.
+This is an end-to-end example of national accounts sequence, 
+from output to net lending. It is based on Russian Federation data 
+for 2014-2018. 
 
-The data is for Russian Federation, 2014-2018. 
+Below is a python session transcript with comments. 
+You can fork [a github repo](https://github.com/epogrebnyak/sna-ru) 
+to replicate calculations.
+"""
 
 """
+## Chart 
+
+A short mnemonic chart to accompaign the calculations:
+    
+```
+               
+X -> GDP -> GNI -> GNDI = C + S (+ net capital transfers)
+      |                       |        
+   Ch + I + Cg + NX         S = I + Net lending 
+      |
+   W + t' + P               Always a mystery:
+      |                     S - I = NX = Net lending 
+   X - AX      
+
+```
+"""
+
+"""
+## Preparations
+"""
+
 import pandas as pd
 import handout
 
 doc = handout.Handout("handout")  # handout: exclude
 
 """
-We shall need to check identities with some rounding error.
-Will use `eq` function for it.
+`eq` function will check identities considering some rounding error.
 """
 
 
-def eq(df1: pd.DataFrame, df2: pd.DataFrame, precision=0.5) -> bool:
+def eq(df1, df2, precision=0.5) -> bool:
     """Compare two dataframes by element with precision margin."""
     return ((df1 - df2).abs() < precision).all()
 
@@ -30,6 +54,8 @@ Read dataset from file.
 df = pd.read_csv("data/sna.csv", index_col=0)
 
 """
+## 1. Output at market prices
+
 Output at market prices is output at basic prices 
 plus tax on products less subsidy on products.
 """
@@ -38,6 +64,8 @@ df["X"] = df.Xb + df.Tp - df.Sp
 
 
 """
+## 2. Production of goods and services account
+
 Output and import are resources,
 consumption, investment (I) and export are uses.
 Consumption is intermediate (AX) and final (C).
@@ -60,7 +88,12 @@ doc.add_image("res_use.png", "png", width=1)  # handout: exclude
 #doc.add_html(Path("handout/res_use.html").read_text())  # handout: exclude 
 
 """
-There are three ways to calculate a GDP.
+## 3. Gross domestic product (GDP)
+
+There are three ways to calculate a GDP. 
+
+With some luck they yield to similar values.
+
 """
 
 gdp1 = df.X - df.AX
@@ -71,7 +104,21 @@ assert eq(gdp1, gdp2)
 assert eq(gdp2, df.GDP)
 assert eq(gdp3, df.GDP)
 
+"""```
+>> gdp1.divide(10**6).round(1)
+
+2014     79.1
+2015     83.1
+2016     86.0
+2017     92.1
+2018    103.9
+
+```"""
+
+
 """
+## 4. Controlling for income and current transfers from abroad
+
 Gross national income (GNI) is GDP and 
 net property and labor ("factor") income 
 form rest of the world (ROW).
@@ -87,21 +134,23 @@ gni = (
 assert eq(gni.iloc[1:,], df.GNI.iloc[1:,])
 
 """
-Gross domestic income (GDI) is GNI 
-and net current (not capital) transfers
+
+Gross national disposable income (GNDI) 
+is GNI and net current transfers from abroad
 """
 
-gdi = gni + df.CT_recieved - df.CT_paid
-assert eq(gdi, df.GDI)
-assert eq(df.C, df.HH + df.G)
+gndi = gni + df.CT_recieved - df.CT_paid
+assert eq(gndi, df.GNDI)
 
 """
+## 5. Savings
+
 Savings is gross domestic income 
-less household and government consumption 
+less household and government consumption. 
 """
 
-
-S = gdi - (df.HH + df.G)
+S = gndi - (df.HH + df.G)
+assert eq(df.C, df.HH + df.G)
 assert eq(S, df.S)
 
 """
@@ -113,6 +162,8 @@ I = df.GFCF + df.inv
 assert eq(I, df.I)
 
 """
+## 6. Net lending
+
 Net lending is S-I, and a balance of capital transfers
 and a non-produced non-material asset aquisition (K.2).
 """
@@ -122,6 +173,16 @@ assert eq(NL, df.NL0)
 
 """
 Net lending is an entry value into financial account (flow of funds).
-Is contains a statistical error, later netted in flow of funds.
+Is usually contains a statistical error, later netted in flow of funds.
 """
+
+
+"""
+## Links
+
+- [SNA 2008 manual](https://unstats.un.org/unsd/nationalaccount/docs/SNA2008.pdf)
+- [Russian national accounts data](https://www.gks.ru/folder/210/document/13221)
+- [Open economy identitites](https://github.com/hisamsabouni/macroLectures/blob/master/lecture_6.pdf)
+"""
+
 doc.show()  # handout: exclude
