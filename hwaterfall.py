@@ -19,11 +19,11 @@ fig = go.Figure(
             for x in [
                 ["Выпуск", "Output (X)"],
                 ["Импорт", "Import (IM)"],
-                ["Статистическое расхождение", "Statistical\ndiscrepancy"],
+                ["Статистическое расхождение", "Statistical discrepancy"],
                 ["Экспорт", "Export (EX)"],
                 ["Инвестиции", "Investment (I)"],
                 ["Конечное потребление", "Final consumption (C)"],
-                ["Промежуточное потребление", "Intermediate\nconsumption (AX)"],
+                ["Промежуточное потребление", "Intermediate consumption (AX)"],
             ]
         ],
         x=[196.6, 21.6, -0.6, -31.9, -23.6, -69.3, -92.7],
