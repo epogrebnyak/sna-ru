@@ -27,7 +27,7 @@ def eq(df1: pd.DataFrame, df2: pd.DataFrame, precision=0.5) -> bool:
 Read dataset from file. 
 """
 
-df = pd.read_csv("sna.csv", index_col=0)
+df = pd.read_csv("data/sna.csv", index_col=0)
 
 """
 Output at market prices is output at basic prices 

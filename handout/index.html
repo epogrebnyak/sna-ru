@@ -26,7 +26,7 @@ Will use `eq` function for it.</div>
     """Compare two dataframes by element with precision margin."""
     return ((df1 - df2).abs() &lt; precision).all()</code></pre>
 <div class="markdown">Read dataset from file.</div>
-<pre><code class="python">df = pd.read_csv("sna.csv", index_col=0)</code></pre>
+<pre><code class="python">df = pd.read_csv("data/sna.csv", index_col=0)</code></pre>
 <div class="markdown">Output at market prices is output at basic prices
 plus tax on products less subsidy on products.</div>
 <pre><code class="python">df["X"] = df.Xb + df.Tp - df.Sp</code></pre>

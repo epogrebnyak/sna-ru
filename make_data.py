@@ -3,11 +3,12 @@ Run this file as
 
   python make_data.py
   
-to produce dataset file <sna.csv>
+to produce dataset file <data/sna.csv>
 """
 
 
 import io
+import os
 import pandas as pd
 
 
@@ -244,4 +245,6 @@ for item in items:
 df_last = pd.concat(map(get_ts, items), axis=1)
 df = pd.concat([df1, df2, df_last], axis=1)
 df["HH"] = df.HH1 + df.HH2
-df.to_csv("sna.csv")
+if not os.path.exists('data'):
+    os.mkdir('data')
+df.to_csv("data/sna.csv")
