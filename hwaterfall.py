@@ -34,7 +34,7 @@ fig = go.Figure(
     )
 )
 
-#"Национальные счета, РФ, 2018, млрд.руб."
+# "Национальные счета, РФ, 2018, млрд.руб."
 
 fig.update_layout(title="Goods and services account (Russia, 2018, trn rub)")
 

@@ -84,8 +84,8 @@ assert eq(resources, uses + df.desc)
 doc.add_image("res_use.png", "png", width=1)  # handout: exclude
 
 # ERROR: Same behaviour                       # handout: exclude
-#from pathlib import Path                     # handout: exclude 
-#doc.add_html(Path("handout/res_use.html").read_text())  # handout: exclude 
+# from pathlib import Path                     # handout: exclude
+# doc.add_html(Path("handout/res_use.html").read_text())  # handout: exclude
 
 """
 ## 3. Gross domestic product (GDP)
