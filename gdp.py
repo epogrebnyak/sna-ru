@@ -10,15 +10,18 @@ The data is for Russian Federation, 2014-2018.
 import pandas as pd
 import handout
 
-doc = handout.Handout("handout") # handout: exclude
+doc = handout.Handout("handout")  # handout: exclude
 
 """
 We shall need to check identities with some rounding error.
 Will use `eq` function for it.
 """
+
+
 def eq(df1: pd.DataFrame, df2: pd.DataFrame, precision=0.5) -> bool:
     """Compare two dataframes by element with precision margin."""
     return ((df1 - df2).abs() < precision).all()
+
 
 """
 Read dataset from file. 
@@ -29,7 +32,7 @@ df = pd.read_csv("sna.csv", index_col=0)
 """
 Output at market prices is output at basic prices 
 plus tax on products less subsidy on products.
-"""   
+"""
 
 df["X"] = df.Xb + df.Tp - df.Sp
 
@@ -42,9 +45,19 @@ Consumption is intermediate (AX) and final (C).
 
 resources = df.X + df.IM
 uses = df.AX + df.C + df.I + df.EX
+
+"""
+Resources and uses are equal, controlling for 
+[statistical discrepancy](https://www.stat.fi/meta/kas/tilastollinen_e_en.html).
+"""
 assert eq(resources, uses + df.desc)
 
-doc.add_image("res_use.png", 'png', width=1)  # handout: exclude
+# ERROR: Inserts image at the bottom of document, not here # handout: exclude
+doc.add_image("res_use.png", "png", width=1)  # handout: exclude
+
+# ERROR: Same behaviour                       # handout: exclude
+#from pathlib import Path                     # handout: exclude 
+#doc.add_html(Path("handout/res_use.html").read_text())  # handout: exclude 
 
 """
 There are three ways to calculate a GDP.
@@ -111,4 +124,4 @@ assert eq(NL, df.NL0)
 Net lending is an entry value into financial account (flow of funds).
 Is contains a statistical error, later netted in flow of funds.
 """
-doc.show() # handout: exclude
+doc.show()  # handout: exclude

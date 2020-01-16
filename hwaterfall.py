@@ -15,14 +15,15 @@ fig = go.Figure(
             "relative",
         ],
         y=[
-            x[1] for x in [ 
-            ["Выпуск", "Output (X)"],
-            ["Импорт", "Import (IM)"],
-            ["Статистическое расхождение", "Statistical\ndiscrepancy"],
-            ["Экспорт", "Export (EX)"],
-            ["Инвестиции", "Investment (I)"],
-            ["Конечное потребление", "Final consumption (C)"],
-            ["Промежуточное потребление", "Intermediate\nconsumption (AX)"]
+            x[1]
+            for x in [
+                ["Выпуск", "Output (X)"],
+                ["Импорт", "Import (IM)"],
+                ["Статистическое расхождение", "Statistical\ndiscrepancy"],
+                ["Экспорт", "Export (EX)"],
+                ["Инвестиции", "Investment (I)"],
+                ["Конечное потребление", "Final consumption (C)"],
+                ["Промежуточное потребление", "Intermediate\nconsumption (AX)"],
             ]
         ],
         x=[196.6, 21.6, -0.6, -31.9, -23.6, -69.3, -92.7],
@@ -33,9 +34,10 @@ fig = go.Figure(
     )
 )
 
-"Национальные счета, РФ, 2018, млрд.руб."
-fig.update_layout(title="National accoutns, Russia, 2018, trn rub")
+#"Национальные счета, РФ, 2018, млрд.руб."
 
-fig.write_html("sna-ru.html", auto_open=True)
+fig.update_layout(title="Goods and services account (Russia, 2018, trn rub)")
+
+fig.write_html("handout/res_use.html", auto_open=True)
 
 fig.show()

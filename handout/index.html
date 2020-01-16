@@ -34,8 +34,10 @@ plus tax on products less subsidy on products.</div>
 consumption, investment (I) and export are uses.
 Consumption is intermediate (AX) and final (C).</div>
 <pre><code class="python">resources = df.X + df.IM
-uses = df.AX + df.C + df.I + df.EX
-assert eq(resources, uses + df.desc)</code></pre>
+uses = df.AX + df.C + df.I + df.EX</code></pre>
+<div class="markdown">Resources and uses are equal, controlling for
+[statistical discrepancy](https://www.stat.fi/meta/kas/tilastollinen_e_en.html).</div>
+<pre><code class="python">assert eq(resources, uses + df.desc)</code></pre>
 <div class="markdown">There are three ways to calculate a GDP.</div>
 <pre><code class="python">gdp1 = df.X - df.AX
 gdp2 = (df.C + df.I - df.IM) + df.EX + df.desc
