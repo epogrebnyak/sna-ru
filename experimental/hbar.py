@@ -31,3 +31,7 @@ df = pd.DataFrame({"lab": ["A", "B", "C"], "val": [10, 30, 20], "vam": [12, 13, 
 df["white"] = df.val.cumsum().shift(1, fill_value=0)
 ax = df.plot.barh(x="lab", y=["white", "val"], stacked=True)
 plt.show()
+
+# Can try sankey
+# - https://plot.ly/python/sankey-diagram/
+# - https://matplotlib.org/3.1.1/api/sankey_api.html
