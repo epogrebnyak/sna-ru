@@ -16,14 +16,16 @@ to replicate calculations.
 A short mnemonic chart to accompaign the calculations:
     
 ```
-               
+      [controlling for factor income and transfers]      
+         |          |
+         V          V
 X -> GDP -> GNI -> GNDI = C + S (+ net capital transfers)
       |                       |        
    Ch + I + Cg + NX         S = I + Net lending 
       |
    W + t' + P               Always a mystery:
-      |                     S - I = NX = Net lending 
-   X - AX      
+      |                     S - I = NX = Net lending       
+   X - AX                   (See Open Economy identitites below)  
 
 ```
 """
@@ -74,18 +76,15 @@ Consumption is intermediate (AX) and final (C).
 resources = df.X + df.IM
 uses = df.AX + df.C + df.I + df.EX
 
+doc.add_image("res_use.png", "png", width=1)  # handout: exclude
+doc.show() # handout: exclude
+
 """
 Resources and uses are equal, controlling for 
 [statistical discrepancy](https://www.stat.fi/meta/kas/tilastollinen_e_en.html).
 """
 assert eq(resources, uses + df.desc)
 
-# ERROR: Inserts image at the bottom of document, not here # handout: exclude
-doc.add_image("res_use.png", "png", width=1)  # handout: exclude
-
-# ERROR: Same behaviour                       # handout: exclude
-# from pathlib import Path                     # handout: exclude
-# doc.add_html(Path("handout/res_use.html").read_text())  # handout: exclude
 
 """
 ## 3. Gross domestic product (GDP)

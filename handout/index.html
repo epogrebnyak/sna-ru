@@ -18,7 +18,8 @@ This is an end-to-end example of national accounts sequence,
 from output to net lending. It is based on Russian Federation data
 for 2014-2018.
 
-Below is a python session transcript with comments. You can fork [a github repo](https://github.com/epogrebnyak/sna-ru)
+Below is a python session transcript with comments.
+You can fork [a github repo](https://github.com/epogrebnyak/sna-ru)
 to replicate calculations.</div>
 <div class="markdown">## Chart
 
@@ -56,7 +57,7 @@ consumption, investment (I) and export are uses.
 Consumption is intermediate (AX) and final (C).</div>
 <pre><code class="python">resources = df.X + df.IM
 uses = df.AX + df.C + df.I + df.EX</code></pre>
-<div class="markdown">Resources and uses are equal, controlling for
+<img src="res_use.png" width="100%" /><div class="markdown">Resources and uses are equal, controlling for
 [statistical discrepancy](https://www.stat.fi/meta/kas/tilastollinen_e_en.html).</div>
 <pre><code class="python">assert eq(resources, uses + df.desc)</code></pre>
 <div class="markdown">## 3. Gross domestic product (GDP)
@@ -121,6 +122,6 @@ Is usually contains a statistical error, later netted in flow of funds.</div>
 - [SNA 2008 manual](https://unstats.un.org/unsd/nationalaccount/docs/SNA2008.pdf)
 - [Russian national accounts data](https://www.gks.ru/folder/210/document/13221)
 - [Open economy identitites](https://github.com/hisamsabouni/macroLectures/blob/master/lecture_6.pdf)</div>
-<img src="res_use.png" width="100%" /></article>
+</article>
 </body>
 </html>
