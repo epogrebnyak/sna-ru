@@ -1,5 +1,6 @@
 # sna-ru
-Годовые показатели системы национальных счетов РФ 2014-2019
+
+Annual systems of national accounts (SNA) data for 2014-2019
 
 <https://epogrebnyak.github.io/sna-ru/docs/index.html>
 
